@@ -63,6 +63,23 @@ proc printHelp {} {
 }
 
 
+# bail --
+#
+#           Bail on a critical error
+#
+# Arguments:
+#           none
+#
+# Results:
+#           Print an error message then exit with non-zero status
+#
+proc bail {msg} {
+    error $msg
+    exit 1
+}
+
+
+
 # getCoords --
 #
 #           Returns the column index for a new GUI object
@@ -116,6 +133,24 @@ proc gridStuff {w} {
 # Extensible UI
 
 
+# Theme --
+#
+#           Sets the ttk style
+#
+# arguments:
+#           none
+#
+# results:
+#           If the theme is supported bt ttk::style, set the theme
+#
+proc Theme {theme} {
+    if {! ($theme in [ttk::style theme names])} {
+        error "Theme '$theme' must be one of: [ttk::style theme names]"
+        exit 1
+    }
+}
+
+
 # Columns --
 #
 #           Sets the number of columns for the UI
@@ -128,13 +163,11 @@ proc gridStuff {w} {
 #
 proc Columns {cols} {
     if {! [string is integer $cols]} {
-        error "Columns must be an integer."
-        exit 1
+        bail "Columns must be an integer."
     }
 
     if {$cols < 1} {
-        error "Number of columns must be greater than 1."
-        exit 1
+        bail "Number of columns must be greater than 1."
     }
 
     # Set the number of columns
@@ -205,13 +238,11 @@ set cfgFile [lindex $argv 0]
 puts "cfgFile: $cfgFile"
 
 if {! [file exists $cfgFile]} {
-    error "Config file '$cfgFile' doesn't exist."
-    exit 1
+    bail "Config file '$cfgFile' doesn't exist."
 }
 
 if {! [file isfile $cfgFile]} {
-    error "'$cfgFile' isn't a file."
-    exit 1
+    bail "'$cfgFile' isn't a file."
 }
 
 
