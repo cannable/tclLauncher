@@ -1,4 +1,6 @@
+Theme default
 Columns 2
+Title TEST
 
 Button Test {echo "Simple Echo"}
 Button Firefox {firefox}

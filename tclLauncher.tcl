@@ -151,6 +151,21 @@ proc Theme {theme} {
 }
 
 
+# Title --
+#
+#           Set the window title
+#
+# arguments:
+#           none
+#
+# results:
+#           Adjusts the window title
+#
+proc Title {title} {
+    return [wm title . $title]
+}
+
+
 # Columns --
 #
 #           Sets the number of columns for the UI
@@ -251,5 +266,6 @@ if {! [file isfile $cfgFile]} {
 
 # Defaults
 bind all <Control-q> exit
+bind all <Escape> exit
 
 source $cfgFile
