@@ -42,7 +42,6 @@ set ::columns 1
 set ::colCounter -1
 set ::rowIndex(0) -1
 
-
 # ------------------------------------------------------------------------------
 # Procedure Definitions
 
@@ -126,6 +125,31 @@ proc gridStuff {w} {
             -column [lindex $coords 0] \
             -row [lindex $coords 1] \
             -sticky ew
+}
+
+
+# comboExec --
+#
+#           Helper proc that retrieves the current value of the associated
+#           combobox, assembles a sane command line, then executes said command
+#           line
+#
+# arguments:
+#           none
+#
+# results:
+#           Runs the requested command
+#
+proc comboExec {command id} {
+    puts "command: '$command'"
+    puts "id: '$id'"
+    puts "data: '[$id get]'"
+
+
+    # Consider both arguments lists and concatenate them
+    set cmdline [concat $command [$id get]]
+
+    catch [list exec -- {*}$cmdline &]
 }
 
 
@@ -235,6 +259,37 @@ proc tclButton {title command} {
     #pack $id -expand 1 -fill both
 
     gridStuff $id
+}
+
+
+# Combo --
+#
+#           Adds a button with a combobox/drop-down menu
+#
+# arguments:
+#           none
+#
+# results:
+#           Add a button and combobox to the UI
+#
+proc Combo {title command values} {
+    set id ".button[incr ::guiIdx]"
+    puts "id: $id"
+
+    # First, we will stash this all in a frame
+    ttk::frame $id
+
+    # Create a combobox and select the first value
+    ttk::combobox $id.data -values $values
+    $id.data current 0
+
+    # Created the button
+    ttk::button $id.button -text $title \
+        -command [list comboExec $command $id.data]
+
+    # Put this stuff on the UI
+    gridStuff $id
+    grid $id.button $id.data
 }
 
 

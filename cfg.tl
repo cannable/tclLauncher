@@ -9,3 +9,13 @@ tclButton tclTest {puts noop}
 tclButton AnotherTest {puts noop}
 tclButton Button3 {puts noop}
 tclButton Yo {puts noop}
+Combo "Firefox" firefox {
+    https://google.ca
+    https://reddit.com
+    http://cfl.ca
+}
+
+Combo Xterm "xterm -bc" {
+    "-e ncmpc"
+    "-e tmux"
+}
