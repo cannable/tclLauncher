@@ -67,7 +67,7 @@ proc printHelp {} {
 #           Bail on a critical error
 #
 # Arguments:
-#           none
+#           msg     Error message to print
 #
 # Results:
 #           Print an error message then exit with non-zero status
@@ -111,7 +111,7 @@ proc getCoords {} {
 #           Provides a consistent mechanism for adding GUI elements
 #
 # Arguments:
-#           none
+#           w   Tk window ID for the object to grid
 #
 # Results:
 #           Uses grid to add the GUI object
@@ -134,10 +134,11 @@ proc gridStuff {w} {
 #           combobox, assembles a sane command line, then executes said command
 #           line
 #
-# arguments:
-#           none
+# Arguments:
+#           command     Command string to execute
+#           id          Tk window ID for the combobox storing arguments
 #
-# results:
+# Results:
 #           Runs the requested command
 #
 proc comboExec {command id} {
@@ -161,10 +162,10 @@ proc comboExec {command id} {
 #
 #           Sets the ttk style
 #
-# arguments:
-#           none
+# Arguments:
+#           theme   Requested theme
 #
-# results:
+# Results:
 #           If the theme is supported bt ttk::style, set the theme
 #
 proc Theme {theme} {
@@ -179,10 +180,10 @@ proc Theme {theme} {
 #
 #           Set the window title
 #
-# arguments:
-#           none
+# Arguments:
+#           title   Requested title
 #
-# results:
+# Results:
 #           Adjusts the window title
 #
 proc Title {title} {
@@ -194,10 +195,10 @@ proc Title {title} {
 #
 #           Sets the number of columns for the UI
 #
-# arguments:
-#           none
+# Arguments:
+#           cols    Requested number of columns
 #
-# results:
+# Results:
 #           Adjusts the number of columns
 #
 proc Columns {cols} {
@@ -223,10 +224,11 @@ proc Columns {cols} {
 #
 #           adds a button
 #
-# arguments:
-#           none
+# Arguments:
+#           title       Requested text for the button
+#           command     Command string for the button
 #
-# results:
+# Results:
 #           add a button to the ui
 #
 proc Button {title command} {
@@ -245,7 +247,8 @@ proc Button {title command} {
 #           Adds a Button, but one that runs Tcl code directly
 #
 # Arguments:
-#           none
+#           title       Requested text for the button
+#           command     Command string for the button
 #
 # Results:
 #           Add a button to the UI
@@ -266,11 +269,15 @@ proc tclButton {title command} {
 #
 #           Adds a button with a combobox/drop-down menu
 #
-# arguments:
-#           none
+# Arguments:
+#           title       Requested text for the button
+#           command     Command string for the button
+#           values      List of values for the combobox
 #
-# results:
-#           Add a button and combobox to the UI
+# Results:
+#           Add a button and combobox to the UI. When the button is pressed,
+#           the current contents/value of the combobox will be appended to the
+#           command string prior to execution.
 #
 proc Combo {title command values} {
     set id ".button[incr ::guiIdx]"
